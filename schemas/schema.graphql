@@ -1,0 +1,57 @@
+type Meal {
+  id: ID!
+  name: String!
+  picture: String!
+  sessions: [Session!]!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
+type User {
+  id: ID!
+  name: String!
+  phone: String!
+  email: String!
+  favourites: [Meal!]!
+  connections: [User!]!
+  sessions: [Session!]!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
+type Session {
+  id: ID!
+  proposed: [Meal!]!
+  users: [User!]!
+  voteUp: [Meal!]!
+  voteDown: [Meal!]!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
+type Query {
+  meal: Meal
+  meals: [Meal!]!
+  user: User
+  users: [User!]!
+  session: Session
+  sessions: [Session!]!
+}
+
+type Mutation {
+  createUser(input: NewUser!): ID
+  editUser: ID
+  deleteUser(userId: ID!): Boolean!
+
+  createMeal: ID
+  editMeal: ID
+  deleteMeal(mealId: ID!): Boolean!
+
+  createSession: ID
+  editSession: ID
+  deleteSession(sessionId: ID!): Boolean!
+
+  voteUp: Boolean!
+  voteDown: Boolean!
+  inviteToSession: Boolean!
+}
