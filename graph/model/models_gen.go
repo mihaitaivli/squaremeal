@@ -2,19 +2,81 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+import (
+	"time"
+)
+
+type EditMeal struct {
+	ID      string  `json:"id"`
+	Name    *string `json:"name"`
+	Picture *string `json:"picture"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type EditUser struct {
+	ID    string  `json:"id"`
+	Name  *string `json:"name"`
+	Phone *string `json:"phone"`
+	Email *string `json:"email"`
+}
+
+type InviteUsersToSession struct {
+	SessionID string   `json:"sessionId"`
+	UserIds   []string `json:"userIds"`
+}
+
+type Meal struct {
+	ID        string     `json:"id"`
+	Name      string     `json:"name"`
+	Picture   string     `json:"picture"`
+	Sessions  []*Session `json:"sessions"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+}
+
+type MealsToSessionMutation struct {
+	SessionID string   `json:"sessionId"`
+	MealIds   []string `json:"mealIds"`
+}
+
+type NewMeal struct {
+	Name    string `json:"name"`
+	Picture string `json:"picture"`
+}
+
+type NewSession struct {
+	ProposedMealIds []string `json:"proposedMealIds"`
+	UsersID         string   `json:"usersId"`
+}
+
+type NewUser struct {
+	Name  string `json:"name"`
+	Phone string `json:"phone"`
+	Email string `json:"email"`
+}
+
+type Session struct {
+	ID        string    `json:"id"`
+	Proposed  []*Meal   `json:"proposed"`
+	Users     []*User   `json:"users"`
+	VoteUp    []*Meal   `json:"voteUp"`
+	VoteDown  []*Meal   `json:"voteDown"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID          string     `json:"id"`
+	Name        string     `json:"name"`
+	Phone       string     `json:"phone"`
+	Email       string     `json:"email"`
+	Favourites  []*Meal    `json:"favourites"`
+	Connections []*User    `json:"connections"`
+	Sessions    []*Session `json:"sessions"`
+	CreatedAt   time.Time  `json:"createdAt"`
+	UpdatedAt   time.Time  `json:"updatedAt"`
+}
+
+type VoteMutation struct {
+	SessionID string `json:"sessionId"`
+	MealID    string `json:"mealId"`
 }

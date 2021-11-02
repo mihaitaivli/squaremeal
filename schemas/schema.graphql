@@ -40,18 +40,62 @@ type Query {
 
 type Mutation {
   createUser(input: NewUser!): ID
-  editUser: ID
+  editUser(input: EditUser!): ID
   deleteUser(userId: ID!): Boolean!
 
-  createMeal: ID
-  editMeal: ID
+  createMeal(input: NewMeal!): ID
+  editMeal(input: EditMeal!): ID
   deleteMeal(mealId: ID!): Boolean!
 
-  createSession: ID
-  editSession: ID
+  createSession(input: NewSession!): ID
   deleteSession(sessionId: ID!): Boolean!
+  addMealsToSession(input: MealsToSessionMutation!): [ID!]
+  removeMealsFromSession(input: MealsToSessionMutation!): [ID!]
+  voteUp(input: VoteMutation!): Boolean!
+  voteDown(input: VoteMutation!): Boolean!
+  inviteUserToSession(input: InviteUsersToSession): Boolean!
+}
 
-  voteUp: Boolean!
-  voteDown: Boolean!
-  inviteToSession: Boolean!
+input NewUser {
+  name: String!
+  phone: String!
+  email: String!
+}
+
+input EditUser {
+  id: ID!
+  name: String
+  phone: String
+  email: String
+}
+
+input NewMeal {
+  name: String!
+  picture: String!
+}
+
+input EditMeal {
+  id: ID!
+  name: String
+  picture: String
+}
+
+input NewSession {
+  proposedMealIds: [ID!]!
+  usersId: ID!
+}
+
+input MealsToSessionMutation {
+  sessionId: ID!
+  mealIds: [ID!]!
+}
+
+input VoteMutation {
+  sessionId: ID!
+  mealId: ID!
+}
+
+input InviteUsersToSession {
+  sessionId: ID!
+  userIds: [ID!]!
 }
